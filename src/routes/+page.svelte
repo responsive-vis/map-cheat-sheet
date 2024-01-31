@@ -12,6 +12,7 @@
 		<span class="highlight solution">design solutions</span> to address them. The recommendations in
 		this cheat sheet are based on guidance from experienced map designers and developers.
 	</p>
+	<a href="#">Download as PDF</a>
 </header>
 
 <div class="challenges">
@@ -66,7 +67,7 @@
 <div class="solutions">
 	<h2>Design Solutions</h2>
 	<p class="guidingQuestion">
-		Which of these strategies could be useful for your map? Start with S1, then move on to S2–S4.
+		Which of these strategies could be useful for your map? <br /> Start with S1, then move on to S2–S4.
 	</p>
 	<div class="category s1">
 		<h3>
@@ -181,44 +182,83 @@
 		--challenge-dark: #d87506;
 		--solution-light: #ebddff;
 		--solution-dark: #7516fb;
-		--light-grey: #f1f1f1;
+		--light-grey: #fefefe;
 	}
 
 	:global(body, html) {
 		margin: 0;
 		padding: 0;
 		box-sizing: border-box;
+		font-family: 'Inter', sans-serif;
+		background-color: var(--light-grey);
 	}
 
 	header {
-		background-color: var(--light-grey);
-		padding: 1rem;
+		padding: 2rem;
+		box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+		max-width: 1000px;
+		margin: 2rem auto 0 auto;
+		position: relative;
+		box-sizing: border-box;
+		background: #fff;
+		background: linear-gradient(to right, var(--challenge-light), var(--solution-light));
+		border-radius: 1.5rem;
+	}
+	header a {
+		display: block;
+		font-weight: bold;
+		text-decoration: none;
+		color: #000;
+		background-color: #fff;
+		border-radius: 1rem;
+		height: 2rem;
+		line-height: 2rem;
+		padding: 0 1rem;
+		width: fit-content;
+	}
+	header a:hover {
+		box-shadow:
+			rgba(0, 0, 0, 0.1) 0px 10px 15px -3px inset,
+			rgba(0, 0, 0, 0.1) 0px 4px 6px -4px;
 	}
 
-	div,
-	p,
-	h1,
-	h2,
-	h3,
-	h4 {
-		font-family: 'Inter', sans-serif;
+	h1 {
+		font-size: 3rem;
+		margin: 0 0 0.5rem 0;
 	}
 
+	h2 {
+		font-size: 2.5rem;
+		margin: 2.5rem 0 0.5rem 0;
+	}
 	.challenges h2 {
 		color: var(--challenge-dark);
+		grid-column: 1 / span 1;
 	}
 	.solutions h2 {
 		color: var(--solution-dark);
+		grid-column: 1 / span 2;
 	}
 	p.guidingQuestion {
 		font-style: italic;
 		text-align: right;
+		display: flex;
+		justify-content: flex-end;
+		align-items: flex-end;
+	}
+	.challenges p.guidingQuestion {
+		grid-column: 2 / span 2;
+	}
+	.solutions p.guidingQuestion {
+		grid-column: 3 / span 2;
 	}
 
 	div.challenges,
 	div.solutions {
 		display: grid;
-		column-gap: 3px;
+		column-gap: 0.5rem;
+		max-width: 1000px;
+		margin: auto;
 	}
 	div.challenges {
 		grid-template-columns: 1fr 1fr 1fr;
@@ -230,6 +270,8 @@
 	div.category {
 		border-radius: calc(1.25rem + 3px);
 		height: max-content;
+		overflow: hidden; /* so corners don't get cut with background-color */
+		box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 	}
 	.challenges div.category {
 		border: var(--challenge-light) 3px solid;
@@ -255,9 +297,9 @@
 
 	h3 {
 		border-radius: 1.25rem 1.25rem 0 0;
+		padding: 0 0 0.4rem 3rem;
+		line-height: 1.5rem;
 		margin: 0;
-		line-height: 2.5rem;
-		padding: 0;
 	}
 	.challenges h3 {
 		background-color: var(--challenge-light);
@@ -273,15 +315,15 @@
 		width: 2.5rem;
 		background-color: var(--light-grey);
 		border-radius: 1.25rem;
-		margin: 0;
+		margin: 0 0.5rem -1rem -3rem;
 		line-height: 2.5rem;
 		padding: 0;
 		text-align: center;
-		margin-right: 0.4rem;
 	}
 
 	.item {
 		padding: 0.2rem;
+		background-color: #fff;
 	}
 	.challenges .item:not(:last-child) {
 		border-bottom: var(--challenge-light) 3px solid;
