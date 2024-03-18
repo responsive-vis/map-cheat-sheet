@@ -1,183 +1,292 @@
-<svelte:head>
-	<style>
-		@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
-	</style>
-</svelte:head>
+<script>
+	import ItemsBox from '$lib/components/ItemsBox.svelte';
 
-<header>
-	<h1>Responsive Map Cheat Sheet</h1>
-	<p>
-		This cheat sheet guides you in successfully making your map design responsive. It provides an
-		overview of the most common <span class="highlight challenge">challenges</span>, and
-		<span class="highlight solution">design solutions</span> to address them. The recommendations in
-		this cheat sheet are based on guidance from experienced map designers and developers.
-	</p>
-	<a href="#">Download as PDF</a>
-</header>
+	/** @type {number} */
+	let windowWidth;
+	$: console.log(windowWidth);
 
-<div class="challenges">
-	<h2>Challenges</h2>
+	const challenges = [
+		{
+			groupLabel: 'C1',
+			groupTitle: 'The map becomes unreadable when scaled down.',
+			items: [
+				{
+					label: 'C1.1',
+					text: 'Small areas on the map are too small to be visible.',
+					img: 'c_small_areas.png',
+					imgAlt:
+						'Excerpt of a choropleth map of the UK. Two orange circles highlight areas with very small spatial units that are difficult to see.'
+				},
+				{
+					label: 'C1.2',
+					text: 'Symbols on the map are too small to be visible.',
+					img: 'c_small_symbols.png',
+					imgAlt:
+						'Proportional circle map showing the Americas. Two orange circles highlight some very small circles that are difficult to see.'
+				},
+				{
+					label: 'C1.3',
+					text: 'Symbols overlaid on the map overlap excessively.',
+					img: 'c_overlap.png',
+					imgAlt:
+						'Proportional circle map showing the Americas. An orange circle highlights an area where circles are overlapping heavily.'
+				}
+			]
+		},
+		{
+			groupLabel: 'C2',
+			groupTitle: 'The aspect ratio of the available space does not fit the map.',
+			items: [
+				{
+					label: 'C2.1',
+					text: 'The map is very small and surrounded by lots of wasted space.',
+					img: 'c_whitespace.png',
+					imgAlt:
+						'Map of the UK, which is portrait format, scaled to fit a landscape format rectangle. The empty space left and right of the map is highlighted in orange.'
+				},
+				{
+					label: 'C2.2',
+					text: 'The map is partly off-screen.',
+					img: 'c_offscreen.png',
+					imgAlt:
+						'Map of the world. A small part of it is visible in a portrait format rectangle representing e.g. a phone screen, the rest of the map is off-screen and this is highlighted by an orange outline.'
+				}
+			]
+		},
+		{
+			groupLabel: 'C3',
+			groupTitle: 'The legend or other UI elements do not fit.',
+			items: [
+				{
+					label: 'C3.1',
+					text: 'Legend (text) is too small to read.',
+					img: 'c_legend_small.png',
+					imgAlt:
+						'Choropleth map of the UK. A legend is shown in the top right, but the labels are too small to read.'
+				},
+				{
+					label: 'C3.2',
+					text: 'The legend covers part of the map.',
+					img: 'c_legend_overlap.png',
+					imgAlt:
+						'Choropleth map of the UK. A legend with large readable labels is shown in the top right, but it overlaps the map and hides parts of it.'
+				}
+			]
+		}
+	];
+
+	const solutions = [
+		{
+			groupLabel: 'S1',
+			groupTitle: 'Start with subtle design changes that will help the map scale down better.',
+			items: [
+				{
+					label: 'S1.1',
+					text: 'Maximize the size of the map by repositioning other UI elements.',
+					img: 's_maximize_map.png',
+					imgAlt:
+						'Two wireframes side-by-side. On the left, a sidebar on the top with a small map below it. On the right, the sidebar is on the left and the map is slightly larger to its right.'
+				},
+				{
+					label: 'S1.2',
+					text: 'Re-design the legend to be more compact.',
+					img: 's_redesign_legend.png',
+					imgAlt:
+						'Two legend designs side by side. On the left, four colors are listed top to bottom with labels spelling out Category A, through Category D. On the right, four colors are listed side by side and simply labeled A to D, a much more compact design.'
+				},
+				{
+					label: 'S1.3',
+					text: 'Replace the legend with annotations or labels on mouseover/tap.',
+					img: 's_remove_legend.png',
+					imgAlt:
+						'An excerpt of a choropleth map with an oversized, symbolic mouse pointer shown on top. The pointer is labelled Category C.'
+				},
+				{
+					label: 'S1.4',
+					text: 'Decrease line width or remove outlines where possible.',
+					img: 's_decrease_line_width.png',
+					imgAlt:
+						'Two choropleth map excerpts side-by-side. The left has white outlines for each spatial unit. On the right, the outlines have been removed, making smaller regions more easily readable.'
+				},
+				{
+					label: 'S1.5',
+					text: 'Adjust the scale of symbols on the map.',
+					img: 's_adjust_scale.png',
+					imgAlt:
+						'Two proportional circle maps side-by-side. The left one has relatively small circles where some of them are hard to see. On the right, all circles have been scaled up and are easier to see.'
+				},
+				{
+					label: 'S1.6',
+					text: 'Change the map projection.',
+					img: 's_change_projection.png',
+					imgAlt:
+						'Two world maps side-by-side. The right one is a little narrower because it uses a different map projection.'
+				},
+				{
+					label: 'S1.7',
+					text: 'Displace symbols or spatial units on the edges of the map slightly to make it more compact or to reduce overlap.',
+					img: 's_displace_symbols.png',
+					imgAlt:
+						'Two maps of the UK side-by-side. On the right, Shetland, which is far in the North East of Scotland, i.e. top right corner of the map, has been moved into an inset box beside Scotland. This allows the map to be larger than the map with Shetland in its true position.'
+				}
+			]
+		},
+		{
+			groupLabel: 'S2',
+			groupTitle: 'Make use of scrolling, zooming, and panning.',
+			items: [
+				{
+					label: 'S2.1',
+					text: 'Scroll the map vertically.',
+					img: 's_scroll_vertically.png',
+					imgAlt:
+						'A map with some of it off-screen to its top and bottom. A large up and down arrow symbolizes vertical scrolling.'
+				},
+				{
+					label: 'S2.2',
+					text: 'Scroll the map horizontally.',
+					img: 's_scroll_horizontally.png',
+					imgAlt:
+						'A map with some of it off-screen to its left and right. A large up and down arrow symbolizes horizontal scrolling.'
+				},
+				{
+					label: 'S2.3',
+					text: 'Pan and zoom the entire map.',
+					img: 's_pan_zoom.png',
+					imgAlt:
+						'A map with some of it off-screen in all directions. A large cross of arrows pointing left, right, up and down symbolizes vertical and horizontal panning of the map.'
+				},
+				{
+					label: 'S2.4',
+					text: 'Create cutouts that zoom into dense areas.',
+					img: 's_cutouts.png',
+					imgAlt:
+						'A small map of the UK. To its right, a cutout that is zoomed into London is shown.'
+				}
+			]
+		},
+		{
+			groupLabel: 'S3',
+			groupTitle: 'Separate the map into segments.',
+			items: [
+				{
+					label: 'S3.1',
+					text: 'Separate the map into equally sized segments.',
+					img: 's_segments.png',
+					imgAlt:
+						'A UK map. To its right, the same map is shown separated into two rectangular sections, created by slicing the map into a top and bottom half.'
+				},
+				{
+					label: 'S3.2',
+					text: 'Separate the map into geographic sub-units.',
+					img: 's_subunits.png',
+					imgAlt:
+						'A world map. To its right, six continents are shown arranged into a two by three grid.'
+				}
+			]
+		},
+		{
+			groupLabel: 'S4',
+			groupTitle: 'Use alternative visualization types that allow for more flexible use of space.',
+			items: [
+				{
+					label: 'C4.1',
+					text: 'Cartograms & grid maps',
+					img: 's_cartograms.png',
+					imgAlt:
+						'Left: a Dorling cartogram, in which circles are arranged geographically and scaled to represent data points about individual countries. Right: An excerpt of a hexagonal grid map.'
+				},
+				{
+					label: 'C4.2',
+					text: 'Geographically ordered visualizations',
+					img: 's_geographically_ordered_vis.png',
+					imgAlt:
+						'A treemap with sections labeled Northern Ireland, Scotland, Wales, England. Rectangles in the treemap are arranged approximately according to their geographic locations.'
+				},
+				{
+					label: 'C4.3',
+					text: 'Non-geographic visualizations',
+					img: 's_non_geo_vis.png',
+					imgAlt: 'Simple bar chart with three bars labeled A, B, and C.'
+				},
+				{
+					label: 'C4.4',
+					text: 'Remove visualizations',
+					img: 's_no_vis.png',
+					imgAlt:
+						'Left: lookup search box labeled "Search a country"; the selected country is United Kingdom and the value "Population: 67.0 million" is displayed. Right: A table (schematic, no content).'
+				}
+			]
+		}
+	];
+</script>
+
+<svelte:window bind:innerWidth={windowWidth} />
+
+<div id="container">
+	<header>
+		<h1>Responsive Map Cheat Sheet</h1>
+		<p>
+			This cheat sheet guides you in successfully making your thematic map design responsive to
+			different screen sizes and devices. It provides an overview of the most common <b
+				>challenges</b
+			>, and <b>design solutions</b> to address them. Use the challenges as a checklist to identify potential
+			issues, then choose design solutions to address the challenges you identified. The recommendations
+			in this cheat sheet are based on guidance from experienced map designers and developers.
+		</p>
+		<a href="cheatsheet_v1.pdf" target="_blank">Download PDF</a>
+	</header>
+
+	<h2 class="challenges">Challenges</h2>
 	<p class="guidingQuestion">Which of these are present in your map?</p>
-	<div class="category c1">
-		<h3><span>C1</span>Scaling the map down makes it unreadable.</h3>
-		<div class="item">
-			<h4><span>C1.1</span>Small areas on the map are too small to be visible.</h4>
-			<!-- svelte-ignore a11y-missing-attribute -->
-			<img src="/illustrations/c_small_areas.png" />
-		</div>
-		<div class="item">
-			<h4><span>C1.2</span>Symbols on the map are too small to be visible.</h4>
-			<!-- svelte-ignore a11y-missing-attribute -->
-			<img src="/illustrations/c_small_symbols.png" />
-		</div>
-		<div class="item">
-			<h4><span>C1.3</span>Symbols overlaid on the map overlap excessively.</h4>
-			<!-- svelte-ignore a11y-missing-attribute -->
-			<img src="/illustrations/c_overlap.png" />
-		</div>
+	<div class="challenges">
+		{#if windowWidth >= 400 && windowWidth < 600}
+			<ItemsBox type="challenges" data={challenges[0]} />
+			<div>
+				<ItemsBox type="challenges" data={challenges[1]} />
+				<ItemsBox type="challenges" data={challenges[2]} />
+			</div>
+		{:else}
+			{#each challenges as challenge}
+				<ItemsBox type="challenges" data={challenge} />
+			{/each}
+		{/if}
 	</div>
-	<div class="category c2">
-		<h3><span>C2</span>The aspect ratio of the available space is mismatched with the map.</h3>
-		<div class="item">
-			<h4><span>C2.1</span>The map is very small and surrounded by lots of wasted space.</h4>
-			<!-- svelte-ignore a11y-missing-attribute -->
-			<img src="/illustrations/c_whitespace.png" />
-		</div>
-		<div class="item">
-			<h4><span>C2.2</span>The map is partly off-screen.</h4>
-			<!-- svelte-ignore a11y-missing-attribute -->
-			<img src="illustrations/c_offscreen.png" />
-		</div>
-	</div>
-	<div class="category c3">
-		<h3><span>C3</span>Legend or other UI elements do not fit.</h3>
-		<div class="item">
-			<h4><span>C3.1</span>Legend (text) is too small to read.</h4>
-			<!-- svelte-ignore a11y-missing-attribute -->
-			<img src="illustrations/c_legend_small.png" />
-		</div>
-		<div class="item">
-			<h4><span>C3.2</span>The legend covers part of the map.</h4>
-			<!-- svelte-ignore a11y-missing-attribute -->
-			<img src="illustrations/c_legend_overlap.png" />
-		</div>
-	</div>
-</div>
 
-<div class="solutions">
-	<h2>Design Solutions</h2>
+	<h2 class="solutions">Design Solutions</h2>
 	<p class="guidingQuestion">
 		Which of these strategies could be useful for your map? <br /> Start with S1, then move on to S2–S4.
 	</p>
-	<div class="category s1">
-		<h3>
-			<span>S1</span>Start with subtle design changes that will help the map scale down better.
-		</h3>
-		<div class="item">
-			<h4><span>S1.1</span>Maximize the size of the map by repositioning other UI elements.</h4>
-			<!-- svelte-ignore a11y-missing-attribute -->
-			<img src="illustrations/s_maximize_map.png" />
-		</div>
-		<div class="item">
-			<h4><span>S1.2</span>Re-design the legend to be more compact.</h4>
-			<!-- svelte-ignore a11y-missing-attribute -->
-			<img src="illustrations/s_redesign_legend.png" />
-		</div>
-		<div class="item">
-			<h4><span>S1.3</span>Replace the legend with annotations or labels on mouseover/tap.</h4>
-			<!-- svelte-ignore a11y-missing-attribute -->
-			<img src="illustrations/s_remove_legend.png" />
-		</div>
-		<div class="item">
-			<h4><span>S1.4</span>Decrease line width or remove outlines where possible.</h4>
-			<!-- svelte-ignore a11y-missing-attribute -->
-			<img src="illustrations/s_decrease_line_width.png" />
-		</div>
-		<div class="item">
-			<h4><span>S1.5</span>Adjust the scale of symbols on the map.</h4>
-			<!-- svelte-ignore a11y-missing-attribute -->
-			<img src="illustrations/s_adjust_scale.png" />
-		</div>
-		<div class="item">
-			<h4><span>S1.6</span>Change the map projection.</h4>
-			<!-- svelte-ignore a11y-missing-attribute -->
-			<img src="illustrations/s_change_projection.png" />
-		</div>
-		<div class="item">
-			<h4>
-				<span>S1.7</span>Displace symbols or spatial units on the edges of the map slightly to make
-				it more compact or to reduce overlap.
-			</h4>
-			<!-- svelte-ignore a11y-missing-attribute -->
-			<img src="illustrations/s_displace_symbols.png" />
-		</div>
-	</div>
-	<div class="category s2">
-		<h3><span>S2</span>Make use of scrolling, zooming, and panning.</h3>
-		<div class="item">
-			<h4><span>S2.1</span>Scroll the map vertically.</h4>
-			<!-- svelte-ignore a11y-missing-attribute -->
-			<img src="illustrations/s_scroll_vertically.png" />
-		</div>
-		<div class="item">
-			<h4><span>S2.2</span>Scroll the map horizontally.</h4>
-			<!-- svelte-ignore a11y-missing-attribute -->
-			<img src="illustrations/s_scroll_horizontally.png" />
-		</div>
-		<div class="item">
-			<h4><span>S2.3</span>Pan and zoom the entire map.</h4>
-			<!-- svelte-ignore a11y-missing-attribute -->
-			<img src="illustrations/s_pan_zoom.png" />
-		</div>
-		<div class="item">
-			<h4><span>S.2.4</span>Create cutouts that zoom into dense areas.</h4>
-			<!-- svelte-ignore a11y-missing-attribute -->
-			<img src="illustrations/s_cutouts.png" />
-		</div>
-	</div>
-	<div class="category s3">
-		<h3><span>S3</span>Separate the map into segments.</h3>
-		<div class="item">
-			<h4><span>S3.1</span>Separate the map into equally sized segments.</h4>
-			<!-- svelte-ignore a11y-missing-attribute -->
-			<img src="illustrations/s_segments.png" />
-		</div>
-		<div class="item">
-			<h4><span>S3.2</span>Separate the map into geographic sub-units.</h4>
-			<!-- svelte-ignore a11y-missing-attribute -->
-			<img src="illustrations/s_subunits.png" />
-		</div>
-	</div>
-	<div class="category s4">
-		<h3>
-			<span>S4</span>Use alternative visualization types that allow for more flexible use of space,
-			such as:
-		</h3>
-		<div class="item">
-			<h4><span>C4.1</span>Cartograms & grid maps</h4>
-			<!-- svelte-ignore a11y-missing-attribute -->
-			<img src="illustrations/s_cartograms.png" />
-		</div>
-		<div class="item">
-			<h4><span>C4.2</span>Geographically ordered visualizations</h4>
-			<!-- svelte-ignore a11y-missing-attribute -->
-			<img src="illustrations/s_geographically_ordered_vis.png" />
-		</div>
-		<div class="item">
-			<h4><span>C4.3</span>Non-geographic visualizations</h4>
-			<!-- svelte-ignore a11y-missing-attribute -->
-			<img src="illustrations/s_non_geo_vis.png" />
-		</div>
-		<div class="item">
-			<h4><span>C4.4</span>Remove visualizations</h4>
-			<!-- svelte-ignore a11y-missing-attribute -->
-			<img src="illustrations/s_no_vis.png" />
-		</div>
+
+	<div class="solutions">
+		{#if windowWidth >= 600 && windowWidth < 800}
+			<ItemsBox type="solutions" data={solutions[0]} />
+			<ItemsBox type="solutions" data={solutions[1]} />
+			<div>
+				<ItemsBox type="solutions" data={solutions[2]} />
+				<ItemsBox type="solutions" data={solutions[3]} />
+			</div>
+		{:else if windowWidth >= 400 && windowWidth < 600}
+			<div>
+				<ItemsBox type="solutions" data={solutions[0]} />
+				<ItemsBox type="solutions" data={solutions[2]} />
+			</div>
+			<div>
+				<ItemsBox type="solutions" data={solutions[1]} />
+				<ItemsBox type="solutions" data={solutions[3]} />
+			</div>
+		{:else}
+			{#each solutions as solution}
+				<ItemsBox type="solutions" data={solution} />
+			{/each}
+		{/if}
 	</div>
 </div>
 
 <style>
-	:root {
+	@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+
+	:global(:root) {
 		--challenge-light: #ffd09c;
 		--challenge-dark: #d87506;
 		--solution-light: #ebddff;
@@ -193,16 +302,21 @@
 		background-color: var(--light-grey);
 	}
 
+	div#container {
+		margin: 0 auto;
+		padding: 0 0.5rem;
+		max-width: 1000px;
+	}
+
 	header {
 		padding: 2rem;
 		box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
-		max-width: 1000px;
 		margin: 2rem auto 0 auto;
 		position: relative;
 		box-sizing: border-box;
 		background: #fff;
 		background: linear-gradient(to right, var(--challenge-light), var(--solution-light));
-		border-radius: 1.5rem;
+		border-radius: 1rem;
 	}
 	header a {
 		display: block;
@@ -231,142 +345,51 @@
 		font-size: 2.5rem;
 		margin: 2.5rem 0 0.5rem 0;
 	}
-	.challenges h2 {
+	h2.challenges {
 		color: var(--challenge-dark);
-		grid-column: 1 / span 1;
+		grid-column: 1/-1; /* from 1st to last col */
 	}
-	.solutions h2 {
+	h2.solutions {
 		color: var(--solution-dark);
-		grid-column: 1 / span 2;
+		grid-column: 1/-1;
 	}
 	p.guidingQuestion {
 		font-style: italic;
-		text-align: right;
-		display: flex;
-		justify-content: flex-end;
-		align-items: flex-end;
-	}
-	.challenges p.guidingQuestion {
-		grid-column: 2 / span 2;
-	}
-	.solutions p.guidingQuestion {
-		grid-column: 3 / span 2;
+		grid-column: 1/-1;
 	}
 
 	div.challenges,
 	div.solutions {
 		display: grid;
+		grid-template-columns: 1fr;
 		column-gap: 0.5rem;
-		max-width: 1000px;
+		/* row-gap: 0.5rem; */
 		margin: auto;
 	}
-	div.challenges {
-		grid-template-columns: 1fr 1fr 1fr;
-	}
-	div.solutions {
-		grid-template-columns: 1fr 1fr 1fr 1fr;
+
+	@media only screen and (min-width: 400px) {
+		/* 2 col layout */
+		div.challenges,
+		div.solutions {
+			grid-template-columns: 1fr 1fr;
+		}
 	}
 
-	div.category {
-		border-radius: calc(1.25rem + 3px);
-		height: max-content;
-		overflow: hidden; /* so corners don't get cut with background-color */
-		box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
-	}
-	.challenges div.category {
-		border: var(--challenge-light) 3px solid;
-	}
-	.solutions div.category {
-		border: var(--solution-light) 3px solid;
-	}
-	.c1,
-	.s1 {
-		grid-column-start: 1;
-	}
-	.c2,
-	.s2 {
-		grid-column-start: 2;
-	}
-	.c3,
-	.s3 {
-		grid-column-start: 3;
-	}
-	.s4 {
-		grid-column-start: 4;
+	@media only screen and (min-width: 600px) {
+		/* 3 col layout */
+		div.challenges,
+		div.solutions {
+			grid-template-columns: 1fr 1fr 1fr;
+		}
 	}
 
-	h3 {
-		border-radius: 1.25rem 1.25rem 0 0;
-		padding: 0 0 0.4rem 3rem;
-		line-height: 1.5rem;
-		margin: 0;
-	}
-	.challenges h3 {
-		background-color: var(--challenge-light);
-		border-bottom: var(--challenge-light) 3px solid;
-	}
-	.solutions h3 {
-		background-color: var(--solution-light);
-		border-bottom: var(--solution-light) 3px solid;
-	}
-	h3 span {
-		display: inline-block;
-		height: 2.5rem;
-		width: 2.5rem;
-		background-color: var(--light-grey);
-		border-radius: 1.25rem;
-		margin: 0 0.5rem -1rem -3rem;
-		line-height: 2.5rem;
-		padding: 0;
-		text-align: center;
-	}
-
-	.item {
-		padding: 0.2rem;
-		background-color: #fff;
-	}
-	.challenges .item:not(:last-child) {
-		border-bottom: var(--challenge-light) 3px solid;
-	}
-	.solutions .item:not(:last-child) {
-		border-bottom: var(--solution-light) 3px solid;
-	}
-	h4 {
-		font-size: 1rem;
-		line-height: 1.3rem;
-		font-weight: 400;
-		margin: 0;
-	}
-	h4 span {
-		border-radius: 2rem;
-		padding: 0 0.25rem 0 0.25rem;
-		margin: 0 0.25rem 0 0;
-	}
-	.challenges h4 span {
-		background-color: var(--challenge-light);
-	}
-	.solutions h4 span {
-		background-color: var(--solution-light);
-	}
-
-	span.highlight.challenge {
-		background-color: var(--challenge-light);
-	}
-	span.highlight.solution {
-		background-color: var(--solution-light);
-	}
-	span.highlight {
-		font-weight: 700;
-		border-radius: 2rem;
-		padding: 0 0.25rem 0 0.25rem;
-		margin: 0 -0.25rem 0 -0.25rem;
-	}
-
-	img {
-		max-width: min(100%, 300px);
-		max-height: 300px;
-		min-width: 150px;
-		margin: 0.3rem auto;
-		display: block;
+	@media only screen and (min-width: 800px) {
+		/* 4 col layout */
+		div.challenges {
+			grid-template-columns: 1fr 1fr 1fr;
+		}
+		div.solutions {
+			grid-template-columns: 1fr 1fr 1fr 1fr;
+		}
 	}
 </style>
