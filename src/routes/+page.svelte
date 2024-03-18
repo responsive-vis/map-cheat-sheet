@@ -3,7 +3,6 @@
 
 	/** @type {number} */
 	let windowWidth;
-	$: console.log(windowWidth);
 
 	const challenges = [
 		{

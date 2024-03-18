@@ -1,4 +1,6 @@
 <script>
+	import { base } from '$app/paths';
+
 	/** @type {string} */
 	export let type;
 
@@ -6,8 +8,6 @@
 	export let data;
 
 	const color = type == 'challenges' ? 'var(--challenge-light)' : 'var(--solution-light)';
-
-	console.log(data);
 </script>
 
 <div class="category" style="--color:{color}">
@@ -15,7 +15,7 @@
 	{#each data.items as item}
 		<div class="item">
 			<h4><span>{item.label}</span>{item.text}</h4>
-			<img src="/illustrations/{item.img}" alt={item.imgAlt} />
+			<img src="{base}/illustrations/{item.img}" alt={item.imgAlt} />
 		</div>
 	{/each}
 </div>
