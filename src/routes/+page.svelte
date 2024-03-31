@@ -233,7 +233,7 @@
 			issues, then choose design solutions to address the challenges you identified. The recommendations
 			in this cheat sheet are based on guidance from experienced map designers and developers.
 		</p>
-		<a href="cheatsheet_v1.pdf" target="_blank">Download PDF</a>
+		<a href="map-cheat-sheet.pdf" target="_blank">Download PDF</a>
 	</header>
 
 	<h2 class="challenges">Challenges</h2>
