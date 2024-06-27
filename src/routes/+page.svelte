@@ -1,5 +1,6 @@
 <script>
 	import ItemsBox from '$lib/components/ItemsBox.svelte';
+	import License from '$lib/components/License.svelte';
 
 	/** @type {number} */
 	let windowWidth;
@@ -280,6 +281,20 @@
 			{/each}
 		{/if}
 	</div>
+
+	<footer>
+		<h2>More information</h2>
+		<p>
+			This is the companion website for an upcoming paper (info to be added after review period).
+		</p>
+
+		<p>
+			Download supplementary material below: excerpts from the Miro boards produced during the
+			workshops we conducted with practitioners.
+		</p>
+		<a href="supplementary-miro-excerpts.pdf" target="_blank">Download supplementary material</a>
+		<License />
+	</footer>
 </div>
 
 <style>
@@ -307,17 +322,29 @@
 		max-width: 1000px;
 	}
 
-	header {
+	header,
+	footer {
 		padding: 2rem;
 		box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
-		margin: 2rem auto 0 auto;
 		position: relative;
 		box-sizing: border-box;
 		background: #fff;
 		background: linear-gradient(to right, var(--challenge-light), var(--solution-light));
 		border-radius: 1rem;
 	}
-	header a {
+	header {
+		margin: 2rem auto 0 auto;
+	}
+	footer {
+		margin: 1rem auto 2rem auto;
+	}
+	footer h2 {
+		font-size: 1.8rem;
+		margin: 0 0 0.5rem 0;
+	}
+
+	header a,
+	footer a {
 		display: block;
 		font-weight: bold;
 		text-decoration: none;
@@ -329,7 +356,8 @@
 		padding: 0 1rem;
 		width: fit-content;
 	}
-	header a:hover {
+	header a:hover,
+	footer a:hover {
 		box-shadow:
 			rgba(0, 0, 0, 0.1) 0px 10px 15px -3px inset,
 			rgba(0, 0, 0, 0.1) 0px 4px 6px -4px;
