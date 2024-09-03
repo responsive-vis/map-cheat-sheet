@@ -286,9 +286,12 @@
 		<h2>More information</h2>
 		<p>
 			This is the companion website for our VIS 2024 paper, available on arXiv: <br />
-			Sarah Schöttler, Uta Hinrichs, and Benjamin Bach. Practices and Strategies in Responsive Thematic
-			Map Design: A Report from Design Workshops with Experts. IEEE Transactions on Visualization and
-			Computer Graphics (VIS 2024).
+			Sarah Schöttler, Uta Hinrichs, and Benjamin Bach.
+			<i>
+				Practices and Strategies in Responsive Thematic Map Design: A Report from Design Workshops
+				with Experts.
+			</i>
+			IEEE Transactions on Visualization and Computer Graphics (VIS 2024).
 		</p>
 		<a href="https://arxiv.org/abs/2407.20735" target="_blank">View paper</a>
 
