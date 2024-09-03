@@ -285,12 +285,16 @@
 	<footer>
 		<h2>More information</h2>
 		<p>
-			This is the companion website for an upcoming paper (info to be added after review period).
+			This is the companion website for our VIS 2024 paper, available on arXiv: <br />
+			Sarah Schöttler, Uta Hinrichs, and Benjamin Bach. Practices and Strategies in Responsive Thematic
+			Map Design: A Report from Design Workshops with Experts. IEEE Transactions on Visualization and
+			Computer Graphics (VIS 2024).
 		</p>
+		<a href="https://arxiv.org/abs/2407.20735" target="_blank">View paper</a>
 
 		<p>
-			Download supplementary material below: excerpts from the Miro boards produced during the
-			workshops we conducted with practitioners.
+			We also provide supplementary material for download below: excerpts from the Miro boards
+			produced during the workshops we conducted with practitioners.
 		</p>
 		<a href="supplementary-miro-excerpts.pdf" target="_blank">Download supplementary material</a>
 		<License />
